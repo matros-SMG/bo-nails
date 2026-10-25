@@ -41,6 +41,11 @@
       const n = body.dataset.wa; const url = (isSlot(n) ? "https://wa.me/" : "https://wa.me/" + digits(n)) + "?text=" + encodeURIComponent(message);
       window.open(url, "_blank", "noopener"); return;
     }
+    if (kind === "vk") {
+      try { await navigator.clipboard.writeText(message); } catch (_) {}
+      const nv = document.querySelector("[data-s-copied]"); if (nv) { nv.hidden = false; setTimeout(() => (nv.hidden = true), 6000); }
+      window.open("https://vk.me/" + body.dataset.vk, "_blank", "noopener"); return;
+    }
     // Telegram и MAX не принимают готовый текст по ссылке: копируем его и открываем чат
     try { await navigator.clipboard.writeText(message); } catch (_) {}
     const note = a.closest("form, .s-contacts")?.parentElement?.querySelector("[data-s-copied]") || document.querySelector("[data-s-copied]");
